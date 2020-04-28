@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
+using OdometryApp;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,9 +19,63 @@ namespace Odometry
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private Line xAxis;
+        private Line yAxis;
+        private readonly string path = @"C:\Users\admin\Documents\TestInput\3.txt";
+
         public MainPage()
         {
             this.InitializeComponent();
+            Window.Current.SizeChanged += OnSizeChanged;
+            xAxis = new Line() {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 4};
+            yAxis = new Line() {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 4};
+
+            RobotCanvas.Children.Add(xAxis);
+            RobotCanvas.Children.Add(yAxis);
+            RecalculateAxis();
+
+            var app = new OdometryAppWrapper();
+            Task.Run(()=>app.RunOdometryApp(path))
+                .ContinueWith(async (r)=> { await Dispatcher.RunAsync(CoreDispatcherPriority.High,()=> DrawPath(r.Result)); });
+        }
+        
+
+        private Position[] history;
+        private void DrawPath(Position[] history)
+        {
+            this.history = history;
+            var originX = latestWidth / 2;
+            var originY = latestHeight / 2;
+            var polyline = new Polyline();
+            polyline.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+            polyline.StrokeThickness = 4;
+            var points = new PointCollection();
+            foreach (var position in history) {
+                points.Add(new Windows.Foundation.Point(originX + position.X/50, originY + position.Y/50));
+            }
+            polyline.Points = points;
+            RobotCanvas.Children.Add(polyline);
+
+        }
+
+        private void OnSizeChanged(object sender, WindowSizeChangedEventArgs e)
+        {
+            latestHeight = e.Size.Height;
+            latestWidth = e.Size.Width;
+            RecalculateAxis();
+        }
+
+        private double latestWidth = 1200;
+        private double latestHeight = 900;
+        private void RecalculateAxis()
+        {
+            xAxis.X1 = 0;
+            xAxis.X2 = latestWidth;
+            xAxis.Y1 = xAxis.Y2 = latestHeight / 2;
+
+            yAxis.X1 = yAxis.X2 = latestWidth / 2;
+            yAxis.Y1 = 0;
+            yAxis.Y2 = latestHeight;
         }
     }
 }

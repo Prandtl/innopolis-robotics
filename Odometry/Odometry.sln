@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Odometry", "Odometry\Odometry.csproj", "{0FCF7B8B-0AD6-412B-B731-B2316B35FADE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdometryApp", "OdometryApp\OdometryApp.csproj", "{10464664-5158-455D-9C48-CB6E1E08E9F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Odometry.IO", "Odometry.IO\Odometry.IO.csproj", "{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -30,5 +34,29 @@ Global
 		{0FCF7B8B-0AD6-412B-B731-B2316B35FADE}.Release|x86.ActiveCfg = Release|x86
 		{0FCF7B8B-0AD6-412B-B731-B2316B35FADE}.Release|x86.Build.0 = Release|x86
 		{0FCF7B8B-0AD6-412B-B731-B2316B35FADE}.Release|x86.Deploy.0 = Release|x86
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Debug|ARM.Build.0 = Debug|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Debug|x86.Build.0 = Debug|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Release|ARM.Build.0 = Release|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Release|x64.Build.0 = Release|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{10464664-5158-455D-9C48-CB6E1E08E9F4}.Release|x86.Build.0 = Release|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Debug|ARM.Build.0 = Debug|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Debug|x64.Build.0 = Debug|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Debug|x86.Build.0 = Debug|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Release|ARM.ActiveCfg = Release|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Release|ARM.Build.0 = Release|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Release|x64.ActiveCfg = Release|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Release|x64.Build.0 = Release|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Release|x86.ActiveCfg = Release|Any CPU
+		{35A5A3D7-19FF-4DCF-9EBD-BCFEB19389BA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
