@@ -9,6 +9,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using OdometryApp;
+using System.IO;
+using System.Linq;
+using System.Globalization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -21,7 +24,7 @@ namespace Odometry
     {
         private Line xAxis;
         private Line yAxis;
-        private readonly string path = @"C:\Users\admin\Documents\TestInput\3.txt";
+        private readonly string path = @"C:\Users\admin\Documents\TestInput\1.txt";
 
         public MainPage()
         {
@@ -33,9 +36,8 @@ namespace Odometry
             RobotCanvas.Children.Add(xAxis);
             RobotCanvas.Children.Add(yAxis);
             RecalculateAxis();
-
-            var app = new OdometryAppWrapper();
-            Task.Run(()=>app.RunOdometryApp(path))
+            
+            Task.Run(()=>RunOdometryApp(path))
                 .ContinueWith(async (r)=> { await Dispatcher.RunAsync(CoreDispatcherPriority.High,()=> DrawPath(r.Result)); });
         }
         
@@ -51,7 +53,7 @@ namespace Odometry
             polyline.StrokeThickness = 4;
             var points = new PointCollection();
             foreach (var position in history) {
-                points.Add(new Windows.Foundation.Point(originX + position.X/50, originY + position.Y/50));
+                points.Add(new Windows.Foundation.Point(originX + position.X/10, originY + position.Y/10));
             }
             polyline.Points = points;
             RobotCanvas.Children.Add(polyline);
@@ -76,6 +78,16 @@ namespace Odometry
             yAxis.X1 = yAxis.X2 = latestWidth / 2;
             yAxis.Y1 = 0;
             yAxis.Y2 = latestHeight;
+        }
+
+        public async Task<Position[]> RunOdometryApp(string inputsFile)
+        {
+
+            using (var s = new StreamReader(new FileStream(inputsFile, FileMode.Open))) {
+                var app = new OdometryApp.OdometryApp(() => s.ReadLine());
+                Debug.WriteLine(app.Run());
+                return app.GetHistory();
+            }
         }
     }
 }
