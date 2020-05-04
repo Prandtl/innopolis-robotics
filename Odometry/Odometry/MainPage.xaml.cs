@@ -24,14 +24,14 @@ namespace Odometry
     {
         private Line xAxis;
         private Line yAxis;
-        private readonly string path = @"C:\Users\admin\Documents\TestInput\1.txt";
+        private readonly string path = @"C:\Users\admin\Documents\TestInput\0.txt";
 
         public MainPage()
         {
             this.InitializeComponent();
             Window.Current.SizeChanged += OnSizeChanged;
-            xAxis = new Line() {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 4};
-            yAxis = new Line() {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 4};
+            xAxis = new Line() {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 2};
+            yAxis = new Line() {Stroke = new SolidColorBrush(Colors.Black), StrokeThickness = 2};
 
             RobotCanvas.Children.Add(xAxis);
             RobotCanvas.Children.Add(yAxis);
@@ -49,8 +49,8 @@ namespace Odometry
             var originX = latestWidth / 2;
             var originY = latestHeight / 2;
             var polyline = new Polyline();
-            polyline.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            polyline.StrokeThickness = 4;
+            polyline.Stroke = new SolidColorBrush(Windows.UI.Colors.Red);
+            polyline.StrokeThickness = 1;
             var points = new PointCollection();
             foreach (var position in history) {
                 points.Add(new Windows.Foundation.Point(originX + position.X/10, originY + position.Y/10));

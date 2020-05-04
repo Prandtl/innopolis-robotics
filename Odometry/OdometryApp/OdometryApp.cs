@@ -12,8 +12,6 @@ namespace OdometryApp
         private int iterations;
         private int iteration;
         private double iterationLength;
-        private int subIterationsCount;
-        private double stepSize = 0.02;
 
         public double Run()
         {
@@ -27,17 +25,15 @@ namespace OdometryApp
         public Position UpdatePosition(double linear, double angular)
         {
             var previous = iteration == 0 ? new Position(0, 0, 0) : history[iteration - 1];
-            var updateLinear = linear * stepSize;
-            var updateAngular = angular * stepSize;
-            for(int i=0;i<subIterationsCount;i++) {
+            var updateLinear = linear * iterationLength;
+            var updateAngular = angular * iterationLength;
 
-                var newX = previous.X + updateLinear * Math.Cos(previous.Heading);
-                var newY = previous.Y + updateLinear * Math.Sin(previous.Heading);
-                var newHeading = previous.Heading + updateAngular;
-                previous = history[iteration] = new Position(newX, newY, newHeading);
-                iteration++;
-            }
-            return previous;
+            var newX = previous.X + updateLinear * Math.Cos(previous.Heading);
+            var newY = previous.Y + updateLinear * Math.Sin(previous.Heading);
+            var newHeading = previous.Heading + updateAngular;
+            var result = history[iteration] = new Position(newX, newY, newHeading);
+            iteration++;
+            return result;
         }
 
         public double GetIntersectionDistance()
@@ -83,9 +79,8 @@ namespace OdometryApp
         {
             var setup = getInput().Replace(',', '.').Split(' ');
             this.iterationLength = double.Parse(setup[1], CultureInfo.InvariantCulture);
-            this.subIterationsCount = (int)(1);
             this.iterations = int.Parse(setup[0], CultureInfo.InvariantCulture);
-            this.history = new Position[iterations*subIterationsCount];
+            this.history = new Position[iterations];
             this.getInput = getInput;
             this.iteration = 0;
         }
