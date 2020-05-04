@@ -24,7 +24,7 @@ namespace Odometry
     {
         private Line xAxis;
         private Line yAxis;
-        private readonly string path = @"C:\Users\admin\Documents\TestInput\0.txt";
+        private readonly string path = @"C:\Users\admin\Documents\TestInput\3.txt";
 
         public MainPage()
         {

@@ -12,6 +12,7 @@ namespace OdometryApp
         private int iterations;
         private int iteration;
         private double iterationLength;
+        private int subIterationsCount = 1000;
 
         public double Run()
         {
@@ -25,13 +26,18 @@ namespace OdometryApp
         public Position UpdatePosition(double linear, double angular)
         {
             var previous = iteration == 0 ? new Position(0, 0, 0) : history[iteration - 1];
-            var updateLinear = linear * iterationLength;
-            var updateAngular = angular * iterationLength;
+            var updateLinear = linear * iterationLength / subIterationsCount;
+            var updateAngular = angular * iterationLength / subIterationsCount;
+            var intermidiatePosition = previous;
+            for(int i=0; i < subIterationsCount; i++) {
+                var newX = intermidiatePosition.X + updateLinear * Math.Cos(intermidiatePosition.Heading);
+                var newY = intermidiatePosition.Y + updateLinear * Math.Sin(intermidiatePosition.Heading);
+                var newHeading = intermidiatePosition.Heading + updateAngular;
+                intermidiatePosition = new Position(newX, newY, newHeading);
+            }
 
-            var newX = previous.X + updateLinear * Math.Cos(previous.Heading);
-            var newY = previous.Y + updateLinear * Math.Sin(previous.Heading);
-            var newHeading = previous.Heading + updateAngular;
-            var result = history[iteration] = new Position(newX, newY, newHeading);
+            var result = history[iteration] = intermidiatePosition;
+
             iteration++;
             return result;
         }
